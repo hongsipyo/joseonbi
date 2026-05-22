@@ -1,7 +1,13 @@
 import { createClient } from "@/lib/supabase/client";
 
-const USER_ID = "b18e8cbe-a644-4ef5-b7f0-b2969cbbe8ba";
 const PROJECT = "joseonbi";
+
+async function getUserId(): Promise<string> {
+  const supabase = createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session?.user) throw new Error("로그인이 필요합니다");
+  return session.user.id;
+}
 
 export interface Episode {
   number: number;
@@ -17,7 +23,7 @@ export async function getEpisodes(): Promise<Episode[]> {
   const { data } = (await supabase
     .from("scratch" as never)
     .select("*")
-    .eq("user_id" as never, USER_ID as never)
+    .eq("user_id" as never, (await getUserId()) as never)
     .eq("moved_to" as never, PROJECT as never)
     .order("created_at" as never, { ascending: true } as never)) as {
     data: { id: string; content: string; created_at: string }[] | null;
@@ -66,7 +72,7 @@ export async function saveEpisodeContent(number: number, content: string) {
     .insert({
       content: `[ep:${number}] ${content}`,
       moved_to: PROJECT,
-      user_id: USER_ID,
+      user_id: await getUserId(),
     } as never);
 }
 
@@ -77,6 +83,6 @@ export async function saveEpisodeTitle(number: number, title: string) {
     .insert({
       content: `[ep-title:${number}] ${title}`,
       moved_to: PROJECT,
-      user_id: USER_ID,
+      user_id: await getUserId(),
     } as never);
 }

@@ -11,6 +11,7 @@ import {
   Menu,
   X,
   Pen,
+  FileText,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -18,6 +19,7 @@ const navItems = [
   { href: "/home", label: "홈", icon: Home },
   { href: "/episodes", label: "회차 (80부)", icon: BookText },
   { href: "/characters", label: "인물", icon: Users },
+  { href: "/treatment", label: "트리트먼트", icon: FileText },
   { href: "/zen", label: "Zen", icon: Feather },
 ];
 

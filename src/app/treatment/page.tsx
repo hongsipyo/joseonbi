@@ -53,13 +53,13 @@ export default function TreatmentPage() {
     setSaving(null);
   }
 
-  if (!loaded) return <div className="max-w-2xl mx-auto px-6 py-10 text-gray-400">로딩 중...</div>;
+  if (!loaded) return <div className="max-w-2xl mx-auto px-6 py-10 text-muted-foreground">로딩 중...</div>;
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-10">
       <div className="flex items-center gap-3 mb-8">
-        <FileText className="w-5 h-5 text-primary" />
-        <h1 className="font-serif text-2xl font-bold">트리트먼트</h1>
+        <FileText className="w-5 h-5 text-accent" />
+        <h1 className="font-serif text-3xl font-bold text-gold">트리트먼트</h1>
       </div>
 
       {/* 전체 트리트먼트 */}
@@ -89,15 +89,15 @@ export default function TreatmentPage() {
           const hasContent = !!episodes[n]?.trim();
 
           return (
-            <div key={n} className={`rounded-lg border ${hasContent ? "border-green-200 bg-green-50/30" : "border-gray-100"}`}>
+            <div key={n} className={`rounded-lg border ${hasContent ? "border-accent/30 bg-accent/10" : "border-border/50"}`}>
               <button
                 className="w-full flex items-center justify-between px-3 py-2 text-sm"
                 onClick={() => setExpandedEp(isExpanded ? null : n)}
               >
-                <span className={hasContent ? "text-green-600 font-medium" : "text-gray-500"}>
+                <span className={hasContent ? "text-accent font-medium" : "text-muted-foreground"}>
                   {n}회 {hasContent && "✓"}
                 </span>
-                {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-gray-400" /> : <ChevronDown className="w-3.5 h-3.5 text-gray-400" />}
+                {isExpanded ? <ChevronUp className="w-3.5 h-3.5 text-muted-foreground" /> : <ChevronDown className="w-3.5 h-3.5 text-muted-foreground" />}
               </button>
               {isExpanded && (
                 <div className="px-3 pb-3 space-y-2">

@@ -4,26 +4,32 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 20% 12%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 12%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 12%;
-    --primary: 220 70% 45%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 20% 20%;
-    --muted: 220 10% 94%;
-    --muted-foreground: 220 10% 45%;
-    --accent: 0 65% 52%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84.2% 60.2%;
+    /* 먹빛(ink) 다크 사극 — 깊은 먹/숯 배경 + 금박(gold) 포인트 + 주사(朱) 레드 */
+    --background: 30 12% 6%;
+    --foreground: 40 28% 88%;
+    --card: 30 10% 10%;
+    --card-foreground: 40 28% 88%;
+    --popover: 30 12% 9%;
+    --popover-foreground: 40 28% 88%;
+    --primary: 4 62% 48%;
+    --primary-foreground: 40 30% 96%;
+    --secondary: 30 8% 16%;
+    --secondary-foreground: 40 20% 82%;
+    --muted: 30 8% 15%;
+    --muted-foreground: 40 10% 60%;
+    --accent: 42 65% 56%;
+    --accent-foreground: 30 30% 8%;
+    --destructive: 0 70% 50%;
     --destructive-foreground: 0 0% 98%;
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 220 70% 45%;
-    --radius: 0.5rem;
+    --border: 36 14% 20%;
+    --input: 36 14% 18%;
+    --ring: 42 65% 56%;
+    --radius: 0.9rem;
+
+    --gold: 42 70% 60%;
+    --ink: 30 12% 6%;
+    --hanji: 40 30% 80%;
+    --jusa: 4 62% 48%;
   }
 }
 
@@ -33,5 +39,52 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* 한지 텍스처 느낌의 radial 그라데이션 + 금/주사 빛번짐 */
+    background-image:
+      radial-gradient(1100px 620px at 82% -12%, hsl(42 60% 38% / 0.18), transparent 60%),
+      radial-gradient(900px 560px at 0% 0%, hsl(4 55% 32% / 0.22), transparent 58%),
+      radial-gradient(700px 700px at 50% 120%, hsl(36 30% 20% / 0.18), transparent 60%);
+    background-attachment: fixed;
   }
+}
+
+@layer utilities {
+  /* 금박 그라데이션 텍스트 */
+  .text-gold {
+    background: linear-gradient(100deg, hsl(44 80% 72%), hsl(38 72% 58%) 48%, hsl(46 78% 70%));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* 먹빛 글래스 카드 */
+  .glass {
+    background: linear-gradient(160deg, hsl(30 10% 13% / 0.85), hsl(30 12% 8% / 0.85));
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(42 55% 55% / 0.14);
+  }
+  .glow-gold {
+    box-shadow: 0 0 0 1px hsl(42 60% 55% / 0.22), 0 12px 40px hsl(42 60% 30% / 0.28);
+  }
+  .glow-jusa {
+    box-shadow: 0 0 24px hsl(4 60% 45% / 0.4);
+  }
+  /* 진행바 샤인 — 금 그라데이션 */
+  .progress-shine {
+    background: linear-gradient(90deg, hsl(38 70% 50%), hsl(46 82% 66%));
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, hsl(46 90% 80% / 0.5), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 2.6s infinite;
+  }
+  @keyframes shimmer { 100% { transform: translateX(100%); } }
+  @keyframes float-up { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .animate-float-up { animation: float-up 0.7s ease-out both; }
+  @keyframes flicker { 0%,100% { opacity: 1; } 50% { opacity: 0.78; } }
+  .animate-flicker { animation: flicker 1.8s ease-in-out infinite; }
 }

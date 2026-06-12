@@ -37,9 +37,12 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-background p-4">
       <Card className="w-full max-w-sm">
         <CardHeader>
-          <CardTitle className="text-center text-lg">
-            조선비 — {mode === "login" ? "로그인" : "회원가입"}
+          <CardTitle className="text-center font-serif text-2xl font-bold text-gold">
+            조선비
           </CardTitle>
+          <p className="text-center text-xs text-muted-foreground">
+            {mode === "login" ? "로그인" : "회원가입"}
+          </p>
         </CardHeader>
         <CardContent>
           <form action={handleSubmit} className="space-y-4">

@@ -118,11 +118,11 @@ export default function EpisodePage() {
         <div className="flex items-center gap-3">
           <div className="w-32 h-2 bg-muted rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all ${isDone ? "bg-green-500" : "bg-primary/60"}`}
+              className={`h-full rounded-full transition-all ${isDone ? "bg-accent" : "bg-primary/60"}`}
               style={{ width: `${percent}%` }}
             />
           </div>
-          <span className={`text-xs ${isDone ? "text-green-600 font-bold" : "text-muted-foreground"}`}>
+          <span className={`text-xs ${isDone ? "text-accent font-bold" : "text-muted-foreground"}`}>
             {chars.toLocaleString()} / {TARGET_CHARS.toLocaleString()}자
             {isDone && " (완성!)"}
           </span>

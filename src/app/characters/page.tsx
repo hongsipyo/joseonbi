@@ -27,8 +27,8 @@ export default function CharactersPage() {
     async function load() {
       const overrides = await getCharacterOverrides();
       if (Object.keys(overrides).length > 0) {
-        setChars((prev) =>
-          prev.map((c) => {
+        setChars((prev) => {
+          const merged = prev.map((c) => {
             const ov = overrides[c.name];
             if (ov) {
               return {
@@ -37,8 +37,14 @@ export default function CharactersPage() {
               };
             }
             return c;
-          })
-        );
+          });
+          // MCP·채팅·코워크가 추가한 신규 인물(details.work=joseonbi, 하드코딩에 없음)도 합친다 (양방향)
+          const existing = new Set(prev.map((c) => c.name));
+          const extras: CharState[] = Object.values(overrides)
+            .filter((o) => ((o as { details?: Record<string, string> }).details?.work === "joseonbi") && !!(o as { name?: string }).name && !existing.has((o as { name: string }).name))
+            .map((o) => ({ name: (o as { name: string }).name, description: ((o as { description?: string }).description) ?? "" }));
+          return [...merged, ...extras];
+        });
       }
     }
     load();

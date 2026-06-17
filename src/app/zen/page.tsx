@@ -10,19 +10,27 @@ export default function ZenPage() {
   const [text, setText] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSave = async () => {
     if (!text.trim()) return;
     setSaving(true);
-    await saveScratch(`[zen] ${text.trim()}`);
+    setError(false);
+    const result = await saveScratch(`[zen] ${text.trim()}`);
     setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    if (result) {
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } else {
+      // 저장 실패 — 거짓으로 "저장됨" 띄우지 않음
+      setError(true);
+    }
   };
 
   const handleClear = () => {
     setText("");
     setSaved(false);
+    setError(false);
   };
 
   return (
@@ -46,7 +54,13 @@ export default function ZenPage() {
 
       <div className="flex items-center justify-between mt-8 pt-4 border-t border-border/30">
         <span className="text-[10px] text-muted-foreground">
-          {text.length > 0 ? `${text.length}자` : "빈 칸"}
+          {error ? (
+            <span className="text-destructive">저장 실패 — 다시 시도해</span>
+          ) : text.length > 0 ? (
+            `${text.length}자`
+          ) : (
+            "빈 칸"
+          )}
         </span>
         <div className="flex gap-2">
           {text.length > 0 && (

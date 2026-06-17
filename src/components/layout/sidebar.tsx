@@ -7,6 +7,7 @@ import {
   Home,
   Users,
   BookText,
+  ScrollText,
   Feather,
   Menu,
   X,
@@ -20,6 +21,7 @@ import { useState } from "react";
 const navItems = [
   { href: "/home", label: "홈", icon: Home },
   { href: "/episodes", label: "회차 (80부)", icon: BookText },
+  { href: "/manuscript", label: "전체 원고", icon: ScrollText },
   { href: "/characters", label: "인물", icon: Users },
   { href: "/brainstorm", label: "브레인스토밍", icon: Lightbulb },
   { href: "/treatment", label: "트리트먼트", icon: FileText },
